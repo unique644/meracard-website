@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MeraCard</title>
+
+  <!-- Fonts: Sora (headings), Hind (text, Hindi + English), IBM Plex Mono (card numbers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Sora:wght@500;600;700&display=swap">
+
+  <!-- Apni styling file -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Icons (ek baar yahan define, baad mein sab jagah use) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-2.2 5.4-2.2 6 0"/><path d="M14 10h4M14 14h4"/></symbol>
+      <symbol id="i-hash" viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 4 8 20M16 4l-2 16"/></symbol>
+      <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v3M14 21h3M21 21h-.01M17 17v4"/></symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+      <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m21 16-5-5-9 9"/></symbol>
+      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V5M7 9l5-5 5 5M5 20h14"/></symbol>
+      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></symbol>
+      <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5l2 2M20 4v5h-5M20 12a8 8 0 0 1-14 5l-2-2M4 20v-5h5"/></symbol>
+      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ========== TOP BAR (menu) ========== -->
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#home" aria-label="MeraCard home">
+        <span class="brand-mark"><svg class="icon"><use href="#i-card"/></svg></span>
+        <span class="brand-name">MeraCard</span>
+      </a>
+      <nav class="nav" id="nav" aria-label="Main menu"></nav>
+    </div>
+  </header>
+
+  <main id="app">
+
+    <!-- ========== 1. HOME PAGE ========== -->
+    <section class="view" id="view-home">
+      <div class="container hero">
+        <div class="hero-text">
+          <p class="eyebrow">Personal digital card</p>
+          <h1>Your identity,<br>one scan away.</h1>
+          <p class="hero-hindi" lang="hi">आपका अपना डिजिटल कार्ड — फोटो, कार्ड नंबर, QR और ज़रूरी दस्तावेज़ एक ही जगह।</p>
+          <div class="hero-actions">
+            <a class="btn btn-accent btn-lg" href="#register">Create my card</a>
+            <a class="btn btn-ghost btn-lg" href="#login">Login</a>
+          </div>
+          <ul class="hero-points">
+            <li><svg class="icon"><use href="#i-check"/></svg>Every card is approved by an admin</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>QR code on the back of each card</li>
+            <li><svg class="icon"><use href="#i-check"/></svg>Keep PDF, JPG and PNG files with your card</li>
+          </ul>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-card" id="heroCard"></div>
+          <p class="hero-caption">Sample card. Tap it to flip.</p>
+        </div>
+      </div>
+
+      <div class="container section" id="features">
+        <h2 class="section-title">Everything on one card</h2>
+        <div class="feature-grid">
+          <article class="feature">
+            <span class="feature-icon"><svg class="icon"><use href="#i-card"/></svg></span>
+            <h3>Photo card</h3>
+            <p>Your name, photo, profession and city on a card you can show anywhere.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-icon"><svg class="icon"><use href="#i-hash"/></svg></span>
+            <h3>Unique card number</h3>
+            <p>Every member gets a number like MC-2026-483920. No two cards share one.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-icon"><svg class="icon"><use href="#i-qr"/></svg></span>
+            <h3>QR on the back</h3>
+            <p>Flip the card to show a QR code that carries your card number.</p>
+          </article>
+          <article class="feature">
+            <span class="feature-icon"><svg class="icon"><use href="#i-folder"/></svg></span>
+            <h3>Document locker</h3>
+            <p>Upload PDF, JPG or PNG files. Download or delete them whenever you want.</p>
+          </article>
+        </div>
+      </div>
+
+      <div class="container section">
+        <h2 class="section-title">How it works</h2>
+        <ol class="steps">
+          <li><span class="step-no">1</span><div><h3>Register</h3><p>Fill the short form and add your photo.</p></div></li>
+          <li><span class="step-no">2</span><div><h3>Wait for approval</h3><p>The admin checks your request and approves it.</p></div></li>
+          <li><span class="step-no">3</span><div><h3>Use your card</h3><p>Log in, flip the card to show the QR, and upload your documents.</p></div></li>
+        </ol>
+      </div>
+
+      <div class="container section">
+        <div class="cta">
+          <div>
+            <h2>Ready to get your card?</h2>
+            <p>It takes about two minutes.</p>
+          </div>
+          <a class="btn btn-accent btn-lg" href="#register">Register now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 2. REGISTER PAGE ========== -->
+    <section class="view" id="view-register">
+      <div class="container auth">
+        <div class="auth-intro">
+          <p class="eyebrow">New member</p>
+          <h1 class="h1-md">Create your card</h1>
+          <p class="lead">Fill this form. After the admin approves you, your card opens when you log in.</p>
+          <ul class="plain-list">
+            <li>Your card number is made for you.</li>
+            <li>Password must have 8+ characters, a letter and a number.</li>
+            <li>The photo is optional now. You can add it later in Profile.</li>
+          </ul>
+        </div>
+
+        <div class="panel">
+          <form id="registerForm" novalidate>
+            <div class="photo-picker">
+              <div class="photo-preview" id="regPhotoPreview"><span>Photo</span></div>
+              <div>
+                <label class="btn btn-ghost btn-sm" for="regPhoto"><svg class="icon"><use href="#i-upload"/></svg>Choose photo</label>
+                <input type="file" id="regPhoto" accept="image/png,image/jpeg" hidden>
+                <p class="hint">JPG or PNG. It is cropped to a square.</p>
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="regName">Full name</label>
+                <input id="regName" type="text" autocomplete="name" placeholder="e.g. Aarav Sharma">
+                <p class="error" data-error-for="regName"></p>
+              </div>
+              <div class="field">
+                <label for="regEmail">Email</label>
+                <input id="regEmail" type="email" autocomplete="email" placeholder="you@example.com">
+                <p class="error" data-error-for="regEmail"></p>
+              </div>
+              <div class="field">
+                <label for="regPhone">Mobile number</label>
+                <input id="regPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10 digit number">
+                <p class="error" data-error-for="regPhone"></p>
+              </div>
+              <div class="field">
+                <label for="regTitle">Profession <span class="optional">(optional)</span></label>
+                <input id="regTitle" type="text" placeholder="e.g. Teacher">
+              </div>
+              <div class="field">
+                <label for="regCity">City <span class="optional">(optional)</span></label>
+                <input id="regCity" type="text" autocomplete="address-level2" placeholder="e.g. Pune">
+              </div>
+              <div class="field">
+                <label for="regPassword">Password</label>
+                <input id="regPassword" type="password" autocomplete="new-password" placeholder="Min 8 characters">
+                <p class="error" data-error-for="regPassword"></p>
+              </div>
+              <div class="field">
+                <label for="regConfirm">Confirm password</label>
+                <input id="regConfirm" type="password" autocomplete="new-password" placeholder="Type it again">
+                <p class="error" data-error-for="regConfirm"></p>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" type="submit">Send registration</button>
+            <p class="form-foot">Already registered? <a href="#login">Login</a></p>
+          </form>
+
+          <div id="registerDone" hidden>
+            <span class="done-icon"><svg class="icon"><use href="#i-check"/></svg></span>
+            <h2>Request sent</h2>
+            <p>Your card number is reserved. It opens after the admin approves you.</p>
+            <p class="done-no" id="registerDoneNo"></p>
+            <a class="btn btn-primary" href="#login">Go to login</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 3. LOGIN PAGE ========== -->
+    <section class="view" id="view-login">
+      <div class="container auth">
+        <div class="auth-intro">
+          <p class="eyebrow">Welcome back</p>
+          <h1 class="h1-md">Login</h1>
+          <p class="lead">Use the email and password you registered with.</p>
+
+          <div class="demo-box">
+            <p class="demo-title">Demo mode</p>
+            <p>This is the first version. Everything is saved only in this browser. Use these sample logins to try it:</p>
+            <div class="demo-actions">
+              <button class="btn btn-ghost btn-sm" type="button" data-fill="admin">Fill admin login</button>
+              <button class="btn btn-ghost btn-sm" type="button" data-fill="user">Fill sample member login</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form id="loginForm" novalidate>
+            <div id="loginMsg" class="notice" role="alert" hidden></div>
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com">
+              <p class="error" data-error-for="loginEmail"></p>
+            </div>
+            <div class="field">
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password">
+              <p class="error" data-error-for="loginPassword"></p>
+            </div>
+            <button class="btn btn-primary btn-block" type="submit">Login</button>
+            <p class="form-foot">New here? <a href="#register">Create your card</a></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 4. MEMBER DASHBOARD ========== -->
+    <section class="view" id="view-dashboard">
+      <div class="container dash">
+        <div class="dash-head">
+          <div class="dash-who">
+            <span id="dashAvatar"></span>
+            <div>
+              <h1 class="h1-sm" id="dashName">Member</h1>
+              <p class="muted" id="dashEmail"></p>
+            </div>
+          </div>
+          <span class="pill approved">Approved</span>
+        </div>
+
+        <div class="tabs" role="tablist" aria-label="Dashboard sections">
+          <button class="tab active" role="tab" aria-selected="true" data-tab="card" type="button">My card</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="docs" type="button">Documents</button>
+          <button class="tab" role="tab" aria-selected="false" data-tab="profile" type="button">Profile</button>
+        </div>
+
+        <!-- Tab 1: card -->
+        <div class="tab-panel active" id="tab-card" role="tabpanel">
+          <div class="card-layout">
+            <div class="card-stage">
+              <div id="dashCard"></div>
+              <p class="hint">Tap the card to flip it and see the QR code.</p>
+            </div>
+            <div class="panel card-details">
+              <h2 class="h2-sm">Card details</h2>
+              <dl class="detail-list" id="detailList"></dl>
+              <div class="btn-row">
+                <button class="btn btn-primary btn-sm" type="button" id="flipBtn"><svg class="icon"><use href="#i-flip"/></svg>Flip card</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="copyNoBtn"><svg class="icon"><use href="#i-copy"/></svg>Copy card number</button>
+                <button class="btn btn-ghost btn-sm" type="button" id="saveQrBtn"><svg class="icon"><use href="#i-download"/></svg>Download QR</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: documents -->
+        <div class="tab-panel" id="tab-docs" role="tabpanel" hidden>
+          <div class="panel">
+            <div class="dropzone" id="dropzone">
+              <svg class="icon icon-lg"><use href="#i-upload"/></svg>
+              <p class="drop-title">Drag a file here</p>
+              <p class="hint">PDF, JPG or PNG. Up to 1.5 MB each, 10 files in total.</p>
+              <label class="btn btn-primary btn-sm" for="docInput">Choose files</label>
+              <input type="file" id="docInput" accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png" multiple hidden>
+            </div>
+          </div>
+          <h2 class="h2-sm list-title">Your documents <span class="count" id="docCount">0</span></h2>
+          <div class="doc-list" id="docList"></div>
+        </div>
+
+        <!-- Tab 3: profile -->
+        <div class="tab-panel" id="tab-profile" role="tabpanel" hidden>
+          <div class="panel profile-panel">
+            <form id="profileForm" novalidate>
+              <div class="photo-picker">
+                <div class="photo-preview" id="profPhotoPreview"><span>Photo</span></div>
+                <div>
+                  <label class="btn btn-ghost btn-sm" for="profPhoto"><svg class="icon"><use href="#i-upload"/></svg>Change photo</label>
+                  <input type="file" id="profPhoto" accept="image/png,image/jpeg" hidden>
+                  <p class="hint">JPG or PNG. It is cropped to a square.</p>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="profName">Full name</label>
+                  <input id="profName" type="text">
+                  <p class="error" data-error-for="profName"></p>
+                </div>
+                <div class="field">
+                  <label for="profPhone">Mobile number</label>
+                  <input id="profPhone" type="tel" inputmode="numeric">
+                  <p class="error" data-error-for="profPhone"></p>
+                </div>
+                <div class="field">
+                  <label for="profTitle">Profession</label>
+                  <input id="profTitle" type="text">
+                </div>
+                <div class="field">
+                  <label for="profCity">City</label>
+                  <input id="profCity" type="text">
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">Save changes</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== 5. ADMIN DASHBOARD ========== -->
+    <section class="view" id="view-admin">
+      <div class="container dash">
+        <div class="dash-head">
+          <div>
+            <p class="eyebrow">Admin</p>
+            <h1 class="h1-sm">Member requests</h1>
+          </div>
+          <button class="btn btn-ghost btn-sm" type="button" id="resetBtn">Reset demo data</button>
+        </div>
+
+        <div class="stats" id="adminStats"></div>
+
+        <div class="toolbar">
+          <div class="segments" id="adminFilter" role="group" aria-label="Filter by status">
+            <button class="seg active" type="button" data-filter="all">All</button>
+            <button class="seg" type="button" data-filter="pending">Pending</button>
+            <button class="seg" type="button" data-filter="approved">Approved</button>
+            <button class="seg" type="button" data-filter="rejected">Rejected</button>
+          </div>
+          <div class="search">
+            <label class="sr-only" for="adminSearch">Search members</label>
+            <input id="adminSearch" type="search" placeholder="Search name, email or card number">
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Member</th>
+                <th>Card number</th>
+                <th>City</th>
+                <th>Files</th>
+                <th>Registered</th>
+                <th>Status</th>
+                <th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><strong>MeraCard</strong> · Demo version. Data stays in this browser only. Secure backend and database come next.</p>
+    </div>
+  </footer>
+
+  <!-- Confirm box (delete karne se pehle poochta hai) -->
+  <div class="modal" id="modal" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h3 id="modalTitle"></h3>
+      <p id="modalText"></p>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" type="button" id="modalCancel">Cancel</button>
+        <button class="btn btn-danger" type="button" id="modalOk">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- QR code library (internet chahiye, sirf pehli baar) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Apni JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>
